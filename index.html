@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="scrolling">
+        
+    </div>
+    <button style="margin-top: 1rem;">GO TO TOP</button>
+
+    <script type="text/javascript">
+        let count = 1;
+        let content = [];
+        var trottler;
+        var div = document.getElementById('scrolling');
+        div.addEventListener('scroll', content_creator_trottling)
+
+        function content_creator(){
+            var inner = document.createElement('div');
+
+            for(var i = count; i < count + 25; i++){
+                let p = document.createElement('p');
+                let line = `I'm line number ${i}`;
+                p.textContent = line;
+                inner.appendChild(p);
+            }
+            count = i;
+            div.appendChild(inner);
+        }
+
+        function content_creator_trottling(){
+            if(trottler){
+                return;
+            }
+            trottler = setTimeout(() => {
+                content_creator();
+                trottler = undefined;
+            }, 500);
+        }
+
+        var btn = document.querySelector('button');
+        btn.addEventListener('click', () => {
+            div.scroll({
+                top: 0,
+                // behavior: "smooth"
+            })
+        })
+        
+        window.addEventListener('load', content_creator);
+        
+    </script>
+</body>
+</html>
